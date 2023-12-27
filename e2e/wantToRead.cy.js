@@ -1,4 +1,13 @@
+function setup() {
+    cy.intercept(
+    {
+        method: 'POST',
+        url: '/shelf/*',
+    }
+    ).as('addToShelf');
+}
 describe('Add Book to My Books.', function()  {
+
     function searchFromTop(text){
         var xpath = '//*[@id="bodycontainer"]/div/div[2]/div/header/div[2]/div/div[2]/form/input[1]';
         cy.xpath(xpath).type(text);
@@ -33,8 +42,9 @@ describe('Add Book to My Books.', function()  {
         cy.visit(Cypress.env('baseUrl'));
         searchFromTop('Yellowfa');
         cy.get('#\31 _book_62047984').find('div.wtrUp.wtrLeft').find('form ').find('button').click();
-        //https://www.goodreads.com/shelf/add_to_shelf
-        // POST 200
+        cy.wait('@addToShelf').then(({ response }) => {
+                expect(response.statusCode).to.eq(200);
+        });
         cy.get('#\31 _book_62047984').find('div.wtrDown.wtrLeft.wtrShelfSortable.wtrStatusToRead').should('exist');
     })
 

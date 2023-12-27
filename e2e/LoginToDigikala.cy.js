@@ -1,7 +1,17 @@
+function setup() {
+    cy.intercept(
+    {
+        method: 'POST',
+        url: 'https://api.digikala.com/v1/user/login/password/',
+    }
+    ).as('login');
+}
+
 describe('Login to Digikala.com.', function()  {
     beforeEach(() => {
         cy.visit('https://www.digikala.com/users/login/?backUrl=/profile/personal-info/');
       });
+
     function enterEmail(email){
         cy.get('input[name="username"]').type(email);
         cy.get('[data-cro-id="login-register"]').click();
@@ -30,7 +40,9 @@ describe('Login to Digikala.com.', function()  {
     it('Successful login', function() {
       enterEmail(Cypress.env('email'));
       enterPassword(Cypress.env('password'));
-
+      cy.wait('@login').then(({ response }) => {
+                expect(response.statusCode).to.eq(200);
+      });
+      cy.get('[data-cro-id="searchbox-type"]').should('exist');
     })
-
 })
