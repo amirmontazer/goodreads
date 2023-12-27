@@ -25,8 +25,7 @@ describe('Login to Digikala.com.', function()  {
               enterEmail('aa@aa.aa');
               enterPassword(password1);
               cy.get('#snackbar-container').find('div').find('div').should('have.text', 'اطلاعات کاربری نادرست است')
-        })
-
+     })
 
     it('Successful login', function() {
       enterEmail(Cypress.env('email'));
