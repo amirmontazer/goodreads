@@ -26,7 +26,6 @@ describe('Add Book to My Books.', function()  {
         cy.url().should('contain', 'search?q=yellowf');
         cy.get('.tableList').should('exist');
         cy.get('.tableList').find('tbody').find('tr:nth-child(1)').find('td:nth-child(2)').find('a').find('span').should('have.text', 'Yellowface');
-        //assert load time
     })
 
     it('Search Book From Left', function() {
@@ -35,7 +34,6 @@ describe('Add Book to My Books.', function()  {
         cy.url().should('contain', 'search?q=yellowf');
         cy.get('.tableList').should('exist');
         cy.get('.tableList').find('tbody').find('tr:nth-child(1)').find('td:nth-child(2)').find('a').find('span').should('have.text', 'Yellowface');
-        //assert load time
     })
 
     it('Click Want to Read button', function() {
